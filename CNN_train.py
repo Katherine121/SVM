@@ -34,7 +34,7 @@ torch.set_printoptions(precision=8)
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--arch', default='cnn', choices=['cnn'])
-parser.add_argument('--dataset-root', default='CIFAR-100')
+parser.add_argument('--dataset-root', default='CIFAR-10')
 parser.add_argument('--save-dir', default='cnn_save')
 parser.add_argument('-j', '--workers', default=0, type=int, metavar='N',
                     help='number of data loading workers (default: 0)')
@@ -47,7 +47,7 @@ parser.add_argument('-b', '--batch-size', default=256, type=int,
                     help='mini-batch size (default: 256), this is the total '
                          'batch size of all GPUs on all nodes when '
                          'using Data Parallel or Distributed Data Parallel')
-parser.add_argument('--num_classes', default=100, type=int)
+parser.add_argument('--num_classes', default=10, type=int)
 parser.add_argument('--lr', '--learning-rate', default=0.001, type=float,
                     metavar='LR', help='initial (base) learning rate', dest='lr')
 parser.add_argument('--momentum', default=0.9, type=float, metavar='M',
@@ -237,9 +237,9 @@ def main_worker(gpu, ngpus_per_node, args):
         transforms.ToTensor(),
         normalize,
     ])
-    train_dataset = torchvision.datasets.CIFAR100(root=args.dataset_root, train=True,
+    train_dataset = torchvision.datasets.CIFAR10(root=args.dataset_root, train=True,
                                                   transform=train_transform, download=True)
-    test_dataset = torchvision.datasets.CIFAR100(root=args.dataset_root, train=False,
+    test_dataset = torchvision.datasets.CIFAR10(root=args.dataset_root, train=False,
                                                   transform=val_transform, download=True)
 
     if args.distributed:
